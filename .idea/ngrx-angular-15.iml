@@ -5,6 +5,8 @@
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/ngrx-course-1-start/dist" />
       <excludeFolder url="file://$MODULE_DIR$/ngrx-course-1-start/tmp" />
+      <excludeFolder url="file://$MODULE_DIR$/ngrx-course-1-auth-finished/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/ngrx-course-1-auth-finished/tmp" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

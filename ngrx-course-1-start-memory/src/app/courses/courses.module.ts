@@ -25,9 +25,11 @@ import { EntityDataService, EntityDefinitionService, EntityMetadataMap} from '@n
 import {compareCourses, Course} from './model/course';
 
 import {compareLessons, Lesson} from './model/lesson';
-import {CourseEntityService} from './services/course-entity.service';
-import {CoursesResolver} from './services/courses.resolver';
-import {CoursesDataServices} from './services/courses-data.services';
+import {CoursesResolver} from './courses.resolver';
+import { CoursesEffects } from './courses.effects';
+import {EffectsModule} from '@ngrx/effects';
+import {StoreModule} from '@ngrx/store';
+import {coursesReducer} from './reducers/course.reducers';
 
 
 export const coursesRoutes: Routes = [
@@ -35,24 +37,15 @@ export const coursesRoutes: Routes = [
     path: '',
     component: HomeComponent,
     resolve: {
-      course: CoursesResolver
+      courses: CoursesResolver
     }
-
   },
   {
     path: ':courseUrl',
-    component: CourseComponent,
-    resolve: {
-      course: CoursesResolver
-    }
+    component: CourseComponent
   }
 ];
 
-const entityMetadata :EntityMetadataMap = {
-  Course: {
-
-  }
-};
 
 @NgModule({
   imports: [
@@ -72,7 +65,9 @@ const entityMetadata :EntityMetadataMap = {
     MatDatepickerModule,
     MatMomentDateModule,
     ReactiveFormsModule,
-    RouterModule.forChild(coursesRoutes)
+    RouterModule.forChild(coursesRoutes),
+    EffectsModule.forFeature([CoursesEffects]),
+    StoreModule.forFeature('courses', coursesReducer)
   ],
   declarations: [
     HomeComponent,
@@ -89,35 +84,14 @@ const entityMetadata :EntityMetadataMap = {
   entryComponents: [EditCourseDialogComponent],
   providers: [
     CoursesHttpService,
-    CourseEntityService,
-    CoursesResolver,
-    CoursesDataServices
+    CoursesResolver
   ]
 })
 export class CoursesModule {
 
-  constructor(private eds: EntityDefinitionService,
-              private entityDataService: EntityDataService,
-              private coursesDataService: CoursesDataServices) {
+  constructor() {
 
-    eds.registerMetadataMap(entityMetadata);
-    entityDataService.registerService('Course', coursesDataService);
   }
 
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
